@@ -25,7 +25,7 @@ class CategoryController extends Controller
     public function create(Request $request)
     {try{$validate=Validator::make($request->all(),[
         'name'=>'required',
-        
+
        ]);
 
         $category=new category;
@@ -37,17 +37,19 @@ class CategoryController extends Controller
             $category->pic=$path;
         }
         $category->save();
-       
+
         return response(['status'=>true, 'data'=>$category]);
     }catch(\Exception $e){return response([
         'status'=>false,
         'massege'=>$validate->errors(),
-    
-         
+        'errors' => $e->getMessage(),
+
+
+
       ],401);       }
     }
 
-  
+
     public function showone( $id)
     {try{
         $category=category::where('id',$id)->get();
@@ -55,8 +57,8 @@ class CategoryController extends Controller
     }catch(\Exception $e){return response([
         'status'=>false,
         'massege'=>$e->getMessage(),
-    
-         
+
+
       ],500);       }
     }
 
@@ -68,8 +70,8 @@ class CategoryController extends Controller
 }catch(\Exception $e){return response([
     'status'=>false,
         'massege'=>$e->getMessage(),
-    
-         
+
+
       ],500);       }
     }
 
@@ -95,14 +97,14 @@ class CategoryController extends Controller
     public function destroy($id)
     {try{
         $category= category::find($id) ;
-        $category->delete(); 
-        return response()->json(['status'=>true, 'data'=>$category]);  
+        $category->delete();
+        return response()->json(['status'=>true, 'data'=>$category]);
     }catch(\Exception $e){return response([
         'status'=>false,
         'massege'=>$e->getMessage(),
-    
-         
+
+
       ],500);       }
     }
-    
+
     }
